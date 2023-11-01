@@ -81,13 +81,13 @@ import ClipboardJS from 'clipboard'
 import { saveAs } from 'file-saver'
 import {
   makeUpHtml, vueTemplate, vueScript, cssStyle
-} from '@/components/generator/html'
-import { makeUpJs } from '@/components/generator/js'
-import { makeUpCss } from '@/components/generator/css'
-import { exportDefault, beautifierConf, titleCase } from '@/utils/index'
+} from '@/utils/generator/html'
+import { makeUpJs } from '@/utils/generator/js'
+import { makeUpCss } from '@/utils/generator/css'
+import { exportDefault, beautifierConf, titleCase } from '@/utils'
 import ResourceDialog from './ResourceDialog'
-import loadMonaco from '@/utils/loadMonaco'
-import loadBeautifier from '@/utils/loadBeautifier'
+import loadMonaco from '@/utils/generator/loadMonaco'
+import loadBeautifier from '@/utils/generator/loadBeautifier'
 
 const editorObj = {
   html: null,

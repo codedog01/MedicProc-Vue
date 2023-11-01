@@ -78,6 +78,12 @@
 
     <div class="center-board">
       <div class="action-bar">
+        <el-button icon="el-icon-video-play" type="text" @click="run">
+          运行
+        </el-button>
+          <el-button icon="el-icon-view" type="text" @click="showJson">
+              查看json
+          </el-button>
         <el-button icon="el-icon-download" type="text" @click="download">
           导出vue文件
         </el-button>
@@ -124,7 +130,19 @@
       :show-field="!!drawingList.length"
       @tag-change="tagChange"
     />
+    <form-drawer
+        :visible.sync="drawerVisible"
+        :form-data="formData"
+        size="100%"
+        :generate-conf="generateConf"
+    />
 
+    <json-drawer
+        size="60%"
+        :visible.sync="jsonDrawerVisible"
+        :json-str="JSON.stringify(formData)"
+        @refresh="refreshJson"
+    />
     <code-type-dialog
       :visible.sync="dialogVisible"
       title="选择生成类型"
@@ -142,7 +160,7 @@ import ClipboardJS from 'clipboard'
 import render from '@/utils/generator/render'
 import RightPanel from './RightPanel'
 import { inputComponents, selectComponents, layoutComponents, formConf } from '@/utils/generator/config'
-import { beautifierConf, titleCase } from '@/utils/index'
+import {beautifierConf, deepClone, titleCase} from '@/utils/index'
 import { makeUpHtml, vueTemplate, vueScript, cssStyle } from '@/utils/generator/html'
 import { makeUpJs } from '@/utils/generator/js'
 import { makeUpCss } from '@/utils/generator/css'
@@ -150,6 +168,8 @@ import drawingDefault from '@/utils/generator/drawingDefault'
 import logo from '@/assets/logo/logo.png'
 import CodeTypeDialog from './CodeTypeDialog'
 import DraggableItem from './DraggableItem'
+import JsonDrawer from './JsonDrawer'
+import FormDrawer from './FormDrawer'
 
 let oldActiveId
 let tempActiveData
@@ -158,7 +178,9 @@ export default {
   components: {
     draggable,
     render,
+    FormDrawer,
     RightPanel,
+    JsonDrawer,
     CodeTypeDialog,
     DraggableItem
   },
@@ -176,6 +198,7 @@ export default {
       activeId: drawingDefault[0].formId,
       drawerVisible: false,
       formData: {},
+      jsonDrawerVisible:false,
       dialogVisible: false,
       generateConf: null,
       showFileName: false,
@@ -317,6 +340,10 @@ export default {
         }
       })
     },
+    showJson() {
+      this.AssembleFormData()
+      this.jsonDrawerVisible = true
+    },
     generateCode() {
       const { type } = this.generateConf
       this.AssembleFormData()
@@ -366,6 +393,11 @@ export default {
           if (Array.isArray(item.children)) this.updateDrawingList(newTag, item.children)
         })
       }
+    },
+    refreshJson(data) {
+      this.drawingList = deepClone(data.fields)
+      delete data.fields
+      this.formConf = data
     }
   }
 }
