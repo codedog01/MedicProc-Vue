@@ -2,7 +2,7 @@
  * @Author: lengao 841423154@qq.com
  * @Date: 2023-11-02 16:46:48
  * @LastEditors: lengao 841423154@qq.com
- * @LastEditTime: 2023-11-02 17:17:25
+ * @LastEditTime: 2023-11-02 18:06:59
  * @FilePath: \MedicProc-Vue\src\views\dataease\dashboard\index.vue
  * @Description: 
 -->
@@ -12,7 +12,7 @@
 <script>
 import iFrame from "@/components/iFrame/index";
 export default {
-  name: "Dataease",
+  name: "DataeaseDashboard",
   components: { iFrame },
   data() {
     return {
