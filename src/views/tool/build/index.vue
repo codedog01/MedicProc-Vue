@@ -137,6 +137,7 @@
         :generate-conf="generateConf"
     />
 
+    <div v-show="drawerVisible">11121</div>
     <json-drawer
         size="60%"
         :visible.sync="jsonDrawerVisible"
