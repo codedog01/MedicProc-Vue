@@ -11,6 +11,8 @@
 </template>
 <script>
 import iFrame from "@/components/iFrame/index";
+import { toDataEase, outDataEase } from '@/api/dataeaseSSO/index'
+
 export default {
   name: "DataeaseDataset",
   components: { iFrame },
@@ -19,10 +21,13 @@ export default {
       url: ""
     };
   },
-    created() {
-    this.getConfigKey("dataease.dataset.url").then(response => {
-      this.url = response.msg;
-    });
+  created() {
+    toDataEase().then(res => {
+      this.getConfigKey("dataease.dataset.url").then(response => {
+        this.url = response.msg;
+      });
+    })
+
   },
 };
 </script>

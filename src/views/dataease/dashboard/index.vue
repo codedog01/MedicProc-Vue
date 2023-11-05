@@ -11,6 +11,8 @@
 </template>
 <script>
 import iFrame from "@/components/iFrame/index";
+import { toDataEase, outDataEase } from '@/api/dataeaseSSO/index'
+
 export default {
   name: "DataeaseDashboard",
   components: { iFrame },
@@ -20,9 +22,12 @@ export default {
     };
   },
   created() {
-    this.getConfigKey("dataease.dashboard.url").then(response => {
-      this.url = response.msg;
-    });
+    toDataEase().then(res=>{
+      this.getConfigKey("dataease.dashboard.url").then(response => {
+        this.url = response.msg;
+      });
+    })
+
   },
 };
 </script>
