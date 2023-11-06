@@ -11,7 +11,7 @@
 </template>
 <script>
 import iFrame from "@/components/iFrame/index";
-import { toDataEase, outDataEase } from '@/api/dataeaseSSO/index'
+import { toDataEase, outDataEase } from '@/api/dataease/index'
 
 export default {
   name: "DataeaseDataset",
