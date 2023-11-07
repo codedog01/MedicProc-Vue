@@ -16,6 +16,8 @@ export const inputComponents = [
     label: '单行文本',
     tag: 'el-input',
     tagIcon: 'input',
+    domian: undefined,
+    columnName: undefined,
     placeholder: '请输入',
     defaultValue: undefined,
     span: 24,
