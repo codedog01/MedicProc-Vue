@@ -44,6 +44,7 @@
     "echarts": "5.4.0",
     "element-ui": "2.15.13",
     "file-saver": "2.0.5",
+    "form-gen-parser": "^1.0.3",
     "fuse.js": "6.4.3",
     "highlight.js": "9.18.5",
     "js-beautify": "1.13.0",

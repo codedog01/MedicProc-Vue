@@ -21,20 +21,14 @@
               </el-option-group>
             </el-select>
           </el-form-item>
-          <el-form-item label="实体">
-            <el-select v-model="activeData.domain" @change="domainChange">
-              <el-option v-for="(value, key) in dbTableList" :key="key" :label="key" :value="value"></el-option>
-            </el-select>
-          </el-form-item>
           <el-form-item v-if="activeData.vModel !== undefined" label="字段名">
             <el-select v-model="activeData.vModel" @change="vModelChange">
               <el-option v-for="item in demainDetals" :key="item.fieldName" :label="item.fieldName"
                 :value="item.fieldName"></el-option>
             </el-select>
-            <!-- <el-input v-model="activeData.vModel" placeholder="请输入字段名（v-model）" /> -->
           </el-form-item>
 
-          <el-form-item label="列名">
+          <el-form-item label="表列名">
             <el-input v-model="activeData.columnName" placeholder="请输入列名" />
           </el-form-item>
           <el-form-item v-if="activeData.componentName !== undefined" label="组件名">
@@ -419,6 +413,11 @@
           <el-form-item label="表单名">
             <el-input v-model="formConf.formRef" placeholder="请输入表单名（ref）" />
           </el-form-item>
+          <el-form-item label="Java实体">
+            <el-select v-model="formConf.domain" @change="domainChange">
+              <el-option v-for="(value, key) in dbTableList" :key="key" :label="key" :value="value"></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="表单模型">
             <el-input v-model="formConf.formModel" placeholder="请输入数据模型" />
           </el-form-item>
@@ -510,9 +509,17 @@ export default {
     this.getDbTableList()
 
   },
+  watch: {
+    'formConf': function (val, oldVal) {
+      if (val.domain) {
+        this.getDomainDetail(val.domain)
+
+      }
+    },
+  },
   data() {
     return {
-      FactiveData: this.activeData ,
+      FactiveData: this.activeData,
       dbTableList: [],
       demainDetals: [],
       currentTab: 'field',
@@ -647,7 +654,6 @@ export default {
       const item = this.demainDetals.find(item => {
         return item.fieldName == fieldName
       })
-      console.log(this.FactiveData);
       this.FactiveData.columnName = item.columnName
 
     },

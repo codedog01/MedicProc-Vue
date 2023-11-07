@@ -1,6 +1,7 @@
 export const formConf = {
   formRef: 'elForm',
-  formModel: 'formData',
+  domain:null,
+  formModel: 'formData'+Math.random(),
   size: 'medium',
   labelPosition: 'right',
   labelWidth: 100,
@@ -16,8 +17,7 @@ export const inputComponents = [
     label: '单行文本',
     tag: 'el-input',
     tagIcon: 'input',
-    domian: undefined,
-    columnName: undefined,
+    columnName: null,
     placeholder: '请输入',
     defaultValue: undefined,
     span: 24,

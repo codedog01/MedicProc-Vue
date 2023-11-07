@@ -61,12 +61,12 @@
       <div class="action-bar">
 
 
-        <!-- <el-button icon="el-icon-video-play" type="text" @click="run">
+        <el-button icon="el-icon-video-play" type="text" @click="run">
           运行
-        </el-button> -->
+        </el-button>
         <el-button icon="el-icon-view" type="text" @click="showJson">
-              查看json
-          </el-button>
+          查看json
+        </el-button>
         <!-- <el-button icon="el-icon-download" type="text" @click="download">
           导出vue文件
         </el-button> -->
@@ -127,6 +127,8 @@ import CodeTypeDialog from './CodeTypeDialog'
 import DraggableItem from './DraggableItem'
 import JsonDrawer from './JsonDrawer'
 import FormDrawer from './FormDrawer'
+import * as FormDashboardAPI from "@/api/form/dashboard";
+import * as FormTemplateAPI from "@/api/form/template";
 
 let oldActiveId
 let tempActiveData
@@ -163,6 +165,7 @@ export default {
       activeData: drawingDefault[0]
     }
   },
+  props: ['formId'],
   created() {
     // 防止 firefox 下 拖拽 会新打卡一个选项卡
     document.body.ondrop = event => {
@@ -187,7 +190,15 @@ export default {
         oldActiveId = val
       },
       immediate: true
-    }
+    },
+    'formId': function (val, oldVal) {
+      if (val || oldVal) {
+        FormDashboardAPI.listForm({ id: val }).then(res => {
+          const formObj = JSON.parse(res.rows[0].json)
+          this.refreshJson(formObj)
+        })
+      }
+    },
   },
   mounted() {
     const clipboard = new ClipboardJS('#copyNode', {
@@ -206,6 +217,7 @@ export default {
     })
   },
   methods: {
+
     activeFormItem(element) {
       this.activeData = element
       this.activeId = element.formId
@@ -249,7 +261,6 @@ export default {
       const func = this[`exec${titleCase(this.operationType)}`]
       this.generateConf = data
       func && func(data)
-      console.log(JSON.stringify(this.formData));
     },
     execRun(data) {
       this.AssembleFormData()
@@ -326,7 +337,7 @@ export default {
       this.operationType = 'copy'
     },
     tagChange(newTag) {
-      console.log("newTag",newTag);
+      console.log("newTag", newTag);
       newTag = this.cloneComponent(newTag)
       newTag.vModel = this.activeData.vModel
       newTag.formId = this.activeId

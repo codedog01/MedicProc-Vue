@@ -92,7 +92,7 @@
       </el-dialog>
 
     </div>
-    <form-builder v-show="showFormBuilder"></form-builder>
+    <form-builder ref="formBuilderRef" v-show="showFormBuilder" :formId="formId"></form-builder>
 
   </div>
 </template>
@@ -148,6 +148,7 @@ export default {
 
       //json转对象
       formData: null,
+      formId:null,
       dbTableList: null,
       // 表单校验
       rules: {
@@ -274,8 +275,9 @@ export default {
       this.$refs.editForm.resetFields()
       this.title = "新增"
     },
-    /** 修改按钮操作 */
+    /** 设计按钮操作 */
     handleBuild(row) {
+      this.formId = row.id
       this.showFormBuilder = true
     },
 
