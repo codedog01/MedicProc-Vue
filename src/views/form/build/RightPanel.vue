@@ -512,7 +512,7 @@ export default {
   },
   data() {
     return {
-      _activeData: this.activeData ,
+      FactiveData: this.activeData ,
       dbTableList: [],
       demainDetals: [],
       currentTab: 'field',
@@ -647,8 +647,8 @@ export default {
       const item = this.demainDetals.find(item => {
         return item.fieldName == fieldName
       })
-      console.log(this._activeData);
-      this._activeData.columnName = item.columnName
+      console.log(this.FactiveData);
+      this.FactiveData.columnName = item.columnName
 
     },
     getDbTableList() {
