@@ -1,3 +1,11 @@
+/*
+ * @Author: lengao 841423154@qq.com
+ * @Date: 2023-11-01 15:11:26
+ * @LastEditors: lengao 841423154@qq.com
+ * @LastEditTime: 2023-11-08 16:15:15
+ * @FilePath: \MedicProc-Vue\src\main.js
+ * @Description: 
+ */
 import Vue from 'vue'
 
 import Cookies from 'js-cookie'
@@ -13,7 +21,6 @@ import router from './router'
 import directive from './directive' // directive
 import plugins from './plugins' // plugins
 import { download } from '@/utils/request'
-
 import './assets/icons' // icon
 import './permission' // permission control
 import { getDicts } from "@/api/system/dict/data";
@@ -37,6 +44,7 @@ import DictTag from '@/components/DictTag'
 import VueMeta from 'vue-meta'
 // 字典数据组件
 import DictData from '@/components/DictData'
+
 
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
@@ -77,6 +85,34 @@ Vue.use(Element, {
 })
 
 Vue.config.productionTip = false
+
+
+
+//表单设计动态组件
+import * as API from "@/api/form/dashboard";
+function getListForm() {
+  API.listForm({
+    pageNum: 1,
+    pageSize: 1000,
+  }).then(res => {
+    let list = res.rows
+    Vue.prototype.$formMetadata = list;
+    list.forEach(element => {
+      const route = {
+        path: element.routeUrl,
+        component: () => import("@/components/DynamicParser"), // 动态引入组件
+        props: {
+          formMetadata: element.json,
+        },
+        hidden: true,
+
+      };
+      router.addRoutes([route])
+    })
+  })
+}
+getListForm()
+
 
 new Vue({
   el: '#app',

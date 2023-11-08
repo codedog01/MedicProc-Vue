@@ -4,7 +4,7 @@
 
       <div class="logo-wrapper">
         <div class="logo">
-          <el-button icon="el-icon-return" type="circle" @click="1">
+          <el-button icon="el-icon-return" type="circle" @click="returnClick">
             返回
           </el-button>
         </div>
@@ -73,7 +73,7 @@
         <!-- <el-button class="copy-btn-main" icon="el-icon-document-copy" type="text" @click="copy">
           复制代码
         </el-button> -->
-        <el-button class="copy-btn-main" icon="el-icon-document-copy" type="text" @click="() => { }">
+        <el-button class="copy-btn-main" icon="el-icon-document-copy" type="text" @click="saveHandler">
           保存
         </el-button>
         <el-button class="delete-btn" icon="el-icon-delete" type="text" @click="empty">
@@ -217,6 +217,19 @@ export default {
     })
   },
   methods: {
+    saveHandler() {
+      this.AssembleFormData()
+      const data = { id: this.formId, json: JSON.stringify(this.formData) }
+      FormDashboardAPI.updateForm(data).then(res => {
+        this.$message.success(res.msg)
+      })
+    },
+
+    // 返回主页面
+    returnClick() {
+      // 关闭当前页
+      this.$emit('close')
+    },
 
     activeFormItem(element) {
       this.activeData = element

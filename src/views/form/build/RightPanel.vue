@@ -28,7 +28,7 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="表列名">
+          <el-form-item v-if="activeData.columnName !== undefined" label="表列名">
             <el-input v-model="activeData.columnName" placeholder="请输入列名" />
           </el-form-item>
           <el-form-item v-if="activeData.componentName !== undefined" label="组件名">
@@ -507,16 +507,24 @@ export default {
   props: ['showField', 'activeData', 'formConf'],
   mounted() {
     this.getDbTableList()
-
+    if (this.formConf.domain) {
+    this.getDomainDetail(this.formConf.domain)
+    }
   },
   watch: {
     'formConf': function (val, oldVal) {
       if (val.domain) {
         this.getDomainDetail(val.domain)
-
       }
     },
+    'activeData': {
+      handler(newValue, oldValue) {
+        this.FactiveData = newValue
+      },
+      deep: true//深度监听
+    }
   },
+
   data() {
     return {
       FactiveData: this.activeData,
@@ -615,6 +623,7 @@ export default {
     }
   },
   computed: {
+  
     documentLink() {
       return (
         this.activeData.document
@@ -654,6 +663,7 @@ export default {
       const item = this.demainDetals.find(item => {
         return item.fieldName == fieldName
       })
+      console.log(item.columnName);
       this.FactiveData.columnName = item.columnName
 
     },
@@ -662,8 +672,8 @@ export default {
         this.dbTableList = res.data
       })
     },
-    getDomainDetail(domain) {
-      FormTemplateAPI.domainDetail({ domain }).then(res => {
+     getDomainDetail(domain) {
+       FormTemplateAPI.domainDetail({ domain }).then(res => {
         this.demainDetals = res.data
       })
     },

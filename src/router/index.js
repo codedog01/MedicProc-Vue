@@ -28,8 +28,20 @@ import Layout from '@/layout'
   }
  */
 
+
+
+
+
 // 公共路由
-export const constantRoutes = [
+export let constantRoutes = [
+  {
+    path: '/view/index1',
+    component: () => import("@/components/DynamicParser"), // 动态引入组件
+    props: {
+      formMetadata: '{}',
+    },
+    hidden: true,
+  },
   {
     path: '/redirect',
     component: Layout,
@@ -175,6 +187,7 @@ Router.prototype.push = function push(location) {
 Router.prototype.replace = function push(location) {
   return routerReplace.call(this, location).catch(err => err)
 }
+
 
 export default new Router({
   mode: 'history', // 去掉url中的#

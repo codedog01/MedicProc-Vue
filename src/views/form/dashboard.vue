@@ -2,7 +2,7 @@
  * @Author: lengao 841423154@qq.com
  * @Date: 2023-11-07 09:13:06
  * @LastEditors: lengao 841423154@qq.com
- * @LastEditTime: 2023-11-07 15:13:48
+ * @LastEditTime: 2023-11-08 12:41:07
  * @FilePath: \MedicProc-Vue\src\views\form\dashboard.vue
  * @Description: 
 -->
@@ -74,11 +74,6 @@
           <el-form-item label="路由地址">
             <el-input v-model="form.routeUrl" />
           </el-form-item>
-          <el-form-item label="实体">
-            <el-select v-model="form.domain">
-              <el-option v-for="(value, key) in dbTableList" :key="key" :label="key" :value="value"></el-option>
-            </el-select>
-          </el-form-item>
           <el-form-item label="备注">
             <el-input v-model="form.remark" />
           </el-form-item>
@@ -92,7 +87,7 @@
       </el-dialog>
 
     </div>
-    <form-builder ref="formBuilderRef" v-show="showFormBuilder" :formId="formId"></form-builder>
+    <form-builder ref="formBuilderRef" v-if="showFormBuilder" :formId="formId" @close="closeFormBuild"></form-builder>
 
   </div>
 </template>
@@ -141,15 +136,13 @@ export default {
       // 表单参数
       form: {
         formName: "",
-        domain: "",
         routeUrl: "",
         remark: ""
       },
 
       //json转对象
       formData: null,
-      formId:null,
-      dbTableList: null,
+      formId: null,
       // 表单校验
       rules: {
         formName: [
@@ -168,14 +161,12 @@ export default {
     this.getList();
   },
   mounted() {
-    this.getDbTableList()
 
   },
   methods: {
-    getDbTableList() {
-      FormTemplateAPI.dbTableList().then(res => {
-        this.dbTableList = res.data
-      })
+    closeFormBuild() {
+      this.showFormBuilder = false
+      this.getList()
     },
     handleUpdate(row) {
       this.showEdit = true

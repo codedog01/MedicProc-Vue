@@ -1,7 +1,7 @@
 export const formConf = {
   formRef: 'elForm',
   domain:null,
-  formModel: 'formData'+Math.random(),
+  formModel: 'formData'+new Date().getTime().toString(),
   size: 'medium',
   labelPosition: 'right',
   labelWidth: 100,
@@ -14,10 +14,10 @@ export const formConf = {
 
 export const inputComponents = [
   {
+    columnName: null,
     label: '单行文本',
     tag: 'el-input',
     tagIcon: 'input',
-    columnName: null,
     placeholder: '请输入',
     defaultValue: undefined,
     span: 24,
@@ -38,6 +38,7 @@ export const inputComponents = [
     document: 'https://element.eleme.cn/#/zh-CN/component/input'
   },
   {
+    columnName: null,
     label: '多行文本',
     tag: 'el-input',
     tagIcon: 'textarea',
@@ -61,6 +62,7 @@ export const inputComponents = [
     document: 'https://element.eleme.cn/#/zh-CN/component/input'
   },
   {
+    columnName: null,
     label: '密码',
     tag: 'el-input',
     tagIcon: 'password',
@@ -85,6 +87,7 @@ export const inputComponents = [
     document: 'https://element.eleme.cn/#/zh-CN/component/input'
   },
   {
+    columnName: null,
     label: '计数器',
     tag: 'el-input-number',
     tagIcon: 'number',
@@ -108,6 +111,7 @@ export const inputComponents = [
 
 export const selectComponents = [
   {
+    columnName: null,
     label: '下拉选择',
     tag: 'el-select',
     tagIcon: 'select',
@@ -133,6 +137,7 @@ export const selectComponents = [
     document: 'https://element.eleme.cn/#/zh-CN/component/select'
   },
   {
+    columnName: null,
     label: '级联选择',
     tag: 'el-cascader',
     tagIcon: 'cascader',
@@ -171,6 +176,7 @@ export const selectComponents = [
     document: 'https://element.eleme.cn/#/zh-CN/component/cascader'
   },
   {
+    columnName: null,
     label: '单选框组',
     tag: 'el-radio-group',
     tagIcon: 'radio',
@@ -195,6 +201,7 @@ export const selectComponents = [
     document: 'https://element.eleme.cn/#/zh-CN/component/radio'
   },
   {
+    columnName: null,
     label: '多选框组',
     tag: 'el-checkbox-group',
     tagIcon: 'checkbox',
@@ -219,6 +226,7 @@ export const selectComponents = [
     document: 'https://element.eleme.cn/#/zh-CN/component/checkbox'
   },
   {
+    columnName: null,
     label: '开关',
     tag: 'el-switch',
     tagIcon: 'switch',
@@ -239,6 +247,7 @@ export const selectComponents = [
     document: 'https://element.eleme.cn/#/zh-CN/component/switch'
   },
   {
+    columnName: null,
     label: '滑块',
     tag: 'el-slider',
     tagIcon: 'slider',
@@ -278,6 +287,7 @@ export const selectComponents = [
     document: 'https://element.eleme.cn/#/zh-CN/component/time-picker'
   },
   {
+    columnName: null,
     label: '时间范围',
     tag: 'el-time-picker',
     tagIcon: 'time-range',
@@ -299,6 +309,7 @@ export const selectComponents = [
     document: 'https://element.eleme.cn/#/zh-CN/component/time-picker'
   },
   {
+    columnName: null,
     label: '日期选择',
     tag: 'el-date-picker',
     tagIcon: 'date',
@@ -319,6 +330,7 @@ export const selectComponents = [
     document: 'https://element.eleme.cn/#/zh-CN/component/date-picker'
   },
   {
+    columnName: null,
     label: '日期范围',
     tag: 'el-date-picker',
     tagIcon: 'date-range',
@@ -341,6 +353,7 @@ export const selectComponents = [
     document: 'https://element.eleme.cn/#/zh-CN/component/date-picker'
   },
   {
+    columnName: null,
     label: '评分',
     tag: 'el-rate',
     tagIcon: 'rate',
@@ -359,6 +372,7 @@ export const selectComponents = [
     document: 'https://element.eleme.cn/#/zh-CN/component/rate'
   },
   {
+    columnName: null,
     label: '颜色选择',
     tag: 'el-color-picker',
     tagIcon: 'color',
@@ -374,6 +388,7 @@ export const selectComponents = [
     document: 'https://element.eleme.cn/#/zh-CN/component/color-picker'
   },
   {
+    columnName: null,
     label: '上传',
     tag: 'el-upload',
     tagIcon: 'upload',
