@@ -35,14 +35,6 @@ import Layout from '@/layout'
 // 公共路由
 export let constantRoutes = [
   {
-    path: '/view/index1',
-    component: () => import("@/components/DynamicParser"), // 动态引入组件
-    props: {
-      formMetadata: '{}',
-    },
-    hidden: true,
-  },
-  {
     path: '/redirect',
     component: Layout,
     hidden: true,
@@ -58,6 +50,7 @@ export let constantRoutes = [
     component: () => import('@/views/login'),
     hidden: true
   },
+
   {
     path: '/register',
     component: () => import('@/views/register'),

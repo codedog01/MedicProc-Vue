@@ -1,15 +1,24 @@
+<!--
+ * @Author: lengao 841423154@qq.com
+ * @Date: 2023-11-09 10:20:12
+ * @LastEditors: lengao 841423154@qq.com
+ * @LastEditTime: 2023-11-09 11:14:40
+ * @FilePath: \MedicProc-Vue\src\components\Form\tinymce\index.vue
+ * @Description: 
+-->
 <template>
   <textarea :id="tinymceId" style="visibility: hidden" />
 </template>
 
 <script>
-import loadTinymce from '@/utils/generator/loadTinymce'
+import loadTinymce from '@/utils/form/loadTinymce'
 import { plugins, toolbar } from './config'
 import { debounce } from 'throttle-debounce'
 
 let num = 1
 
 export default {
+  name:"Tinymce",
   props: {
     id: {
       type: String,

@@ -2,7 +2,15 @@
  * @Author: lengao 841423154@qq.com
  * @Date: 2023-11-01 15:11:26
  * @LastEditors: lengao 841423154@qq.com
- * @LastEditTime: 2023-11-08 16:15:15
+ * @LastEditTime: 2023-11-09 17:15:59
+ * @FilePath: \MedicProc-Vue\src\main.js
+ * @Description: 
+ */
+/*
+ * @Author: lengao 841423154@qq.com
+ * @Date: 2023-11-01 15:11:26
+ * @LastEditors: lengao 841423154@qq.com
+ * @LastEditTime: 2023-11-09 16:53:16
  * @FilePath: \MedicProc-Vue\src\main.js
  * @Description: 
  */
@@ -45,6 +53,7 @@ import VueMeta from 'vue-meta'
 // 字典数据组件
 import DictData from '@/components/DictData'
 
+import Tinymce from '@/components/Form/tinymce/index.vue'
 
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
@@ -65,6 +74,7 @@ Vue.component('Editor', Editor)
 Vue.component('FileUpload', FileUpload)
 Vue.component('ImageUpload', ImageUpload)
 Vue.component('ImagePreview', ImagePreview)
+Vue.component('tinymce', Tinymce)
 
 Vue.use(directive)
 Vue.use(plugins)
@@ -87,8 +97,7 @@ Vue.use(Element, {
 Vue.config.productionTip = false
 
 
-
-//表单设计动态组件
+//表单设计动态组件挂载及绑定路由
 import * as API from "@/api/form/dashboard";
 function getListForm() {
   API.listForm({
@@ -96,24 +105,20 @@ function getListForm() {
     pageSize: 1000,
   }).then(res => {
     let list = res.rows
-    Vue.prototype.$formMetadata = list;
     list.forEach(element => {
       const route = {
         path: element.routeUrl,
-        component: () => import("@/components/DynamicParser"), // 动态引入组件
+        component: () => import("@/views/form/FormParser"), // 动态引入组件
         props: {
-          formMetadata: element.json,
+          formConf: element.json,
         },
         hidden: true,
-
       };
       router.addRoutes([route])
     })
   })
 }
 getListForm()
-
-
 new Vue({
   el: '#app',
   router,

@@ -1,3 +1,11 @@
+/*
+ * @Author: lengao 841423154@qq.com
+ * @Date: 2023-11-09 10:14:43
+ * @LastEditors: lengao 841423154@qq.com
+ * @LastEditTime: 2023-11-09 15:11:45
+ * @FilePath: \MedicProc-Vue\src\utils\form\pluginsConfig.js
+ * @Description: 
+ */
 const CDN = 'https://lib.baomitu.com/' // CDN Homepage: https://cdn.baomitu.com/
 const publicPath = process.env.BASE_URL
 

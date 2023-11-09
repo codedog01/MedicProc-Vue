@@ -40,9 +40,9 @@ module.exports = {
 
   pages: {
     preview: {
-      entry: 'src/views/form/build/preview/main.js',
+      entry: 'src/views/form/preview/main.js',
       template: 'public/preview.html',
-      filename: 'preview.html',
+      filename: 'form/preview.html',
       chunks: ['chunk-vendors', 'chunk-common', 'preview'],
       minify
     },

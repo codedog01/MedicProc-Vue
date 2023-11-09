@@ -1,15 +1,16 @@
 /*
  * @Author: lengao 841423154@qq.com
- * @Date: 2023-11-02 09:38:00
+ * @Date: 2023-11-09 10:14:58
  * @LastEditors: lengao 841423154@qq.com
- * @LastEditTime: 2023-11-02 09:51:10
- * @FilePath: \MedicProc-Vue\src\views\tool\build\preview\main.js
+ * @LastEditTime: 2023-11-09 14:40:23
+ * @FilePath: \MedicProc-Vue\src\views\form\preview\main.js
  * @Description: 
  */
+
 import Vue from 'vue'
-import { loadScriptQueue } from '@/utils/generator/loadScript'
+import { loadScriptQueue } from '@/utils/form/loadScript'
 import axios from 'axios'
-import Tinymce from '@/components/tinymce/index.vue'
+import Tinymce from '@/components/Form/tinymce/index.vue'
 
 Vue.component('tinymce', Tinymce)
 Vue.prototype.$axios = axios
