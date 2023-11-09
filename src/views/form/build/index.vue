@@ -202,6 +202,7 @@ export default {
     },
     'formId': function (val, oldVal) {
       if (val || oldVal) {
+        console.log(val);
         FormDashboardAPI.listForm({ id: val }).then(res => {
           const formObj = JSON.parse(res.rows[0].json)
           this.refreshJson(formObj)
@@ -210,15 +211,10 @@ export default {
     },
   },
   mounted() {
-    // if (Array.isArray(drawingListInDB) && drawingListInDB.length > 0) {
-    //   this.drawingList = drawingListInDB
-    // } else {
-    //   this.drawingList = drawingDefalut
-    // }
-    // this.activeFormItem(this.drawingList[0])
-    // if (formConfInDB) {
-    //   this.formConf = formConfInDB
-    // }
+    FormDashboardAPI.listForm({ id: this.formId }).then(res => {
+      const formObj = JSON.parse(res.rows[0].json)
+      this.refreshJson(formObj)
+    })
     loadBeautifier(btf => {
       beautifier = btf
     })

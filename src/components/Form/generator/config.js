@@ -1,5 +1,6 @@
 // 表单属性【右面板】
 export const formConf = {
+  entity: null,
   formRef: 'elForm',
   formModel: 'formData',
   size: 'medium',
@@ -18,6 +19,7 @@ export const inputComponents = [
     // 组件的自定义配置
     __config__: {
       label: '单行文本',
+      columnName: null,
       labelWidth: null,
       showLabel: true,
       changeTag: true,
@@ -50,6 +52,7 @@ export const inputComponents = [
   {
     __config__: {
       label: '多行文本',
+      columnName: null,
       labelWidth: null,
       showLabel: true,
       tag: 'el-input',
@@ -77,6 +80,7 @@ export const inputComponents = [
   {
     __config__: {
       label: '密码',
+      columnName: null,
       showLabel: true,
       labelWidth: null,
       changeTag: true,
@@ -107,6 +111,7 @@ export const inputComponents = [
   {
     __config__: {
       label: '计数器',
+      columnName: null,
       showLabel: true,
       changeTag: true,
       labelWidth: null,
@@ -131,6 +136,7 @@ export const inputComponents = [
   {
     __config__: {
       label: '编辑器',
+      columnName: null,
       showLabel: true,
       changeTag: true,
       labelWidth: null,
@@ -154,6 +160,7 @@ export const selectComponents = [
   {
     __config__: {
       label: '下拉选择',
+      columnName: null,
       showLabel: true,
       labelWidth: null,
       tag: 'el-select',
@@ -184,6 +191,7 @@ export const selectComponents = [
   {
     __config__: {
       label: '级联选择',
+      columnName: null,
       url: 'https://www.fastmock.site/mock/f8d7a54fb1e60561e2f720d5a810009d/fg/cascaderList',
       method: 'get',
       dataPath: 'list',
@@ -230,6 +238,7 @@ export const selectComponents = [
   {
     __config__: {
       label: '单选框组',
+      columnName: null,
       labelWidth: null,
       showLabel: true,
       tag: 'el-radio-group',
@@ -260,6 +269,7 @@ export const selectComponents = [
   {
     __config__: {
       label: '多选框组',
+      columnName: null,
       tag: 'el-checkbox-group',
       tagIcon: 'checkbox',
       defaultValue: [],
@@ -292,6 +302,7 @@ export const selectComponents = [
   {
     __config__: {
       label: '开关',
+      columnName: null,
       tag: 'el-switch',
       tagIcon: 'switch',
       defaultValue: false,
@@ -316,6 +327,7 @@ export const selectComponents = [
   {
     __config__: {
       label: '滑块',
+      columnName: null,
       tag: 'el-slider',
       tagIcon: 'slider',
       defaultValue: null,
@@ -338,6 +350,7 @@ export const selectComponents = [
   {
     __config__: {
       label: '时间选择',
+      columnName: null,
       tag: 'el-time-picker',
       tagIcon: 'time',
       defaultValue: null,
@@ -363,6 +376,7 @@ export const selectComponents = [
   {
     __config__: {
       label: '时间范围',
+      columnName: null,
       tag: 'el-time-picker',
       tagIcon: 'time-range',
       span: 24,
@@ -388,6 +402,7 @@ export const selectComponents = [
   {
     __config__: {
       label: '日期选择',
+      columnName: null,
       tag: 'el-date-picker',
       tagIcon: 'date',
       defaultValue: null,
@@ -412,6 +427,7 @@ export const selectComponents = [
   {
     __config__: {
       label: '日期范围',
+      columnName: null,
       tag: 'el-date-picker',
       tagIcon: 'date-range',
       defaultValue: null,
@@ -438,6 +454,7 @@ export const selectComponents = [
   {
     __config__: {
       label: '评分',
+      columnName: null,
       tag: 'el-rate',
       tagIcon: 'rate',
       defaultValue: 0,
@@ -460,6 +477,7 @@ export const selectComponents = [
   {
     __config__: {
       label: '颜色选择',
+      columnName: null,
       tag: 'el-color-picker',
       tagIcon: 'color',
       span: 24,
@@ -480,6 +498,7 @@ export const selectComponents = [
   {
     __config__: {
       label: '上传',
+      columnName: null,
       tag: 'el-upload',
       tagIcon: 'upload',
       layout: 'colFormItem',
