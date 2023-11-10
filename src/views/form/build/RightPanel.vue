@@ -24,11 +24,8 @@
             </el-select>
           </el-form-item>
           <el-form-item v-if="activeData.__vModel__ !== undefined" label="实体字段">
-            <el-select v-model="activeData.__vModel__"  placeholder="请选择Java实体字段（v-model）" @change="vModelChange">
-              <el-option
-               v-for="item in fieldsOptions"
-                :key="item.fieldName" 
-                :label="item.fieldName"
+            <el-select v-model="activeData.__vModel__" placeholder="请选择Java实体字段（v-model）" @change="vModelChange">
+              <el-option v-for="item in fieldsOptions" :key="item.fieldName" :label="item.fieldName"
                 :value="item.fieldName">
               </el-option>
             </el-select>
@@ -473,6 +470,25 @@
               </el-button>
             </div>
           </template>
+
+          <template>
+            <el-divider>事件绑定</el-divider>
+            <div v-for="(value, key) in activeData.__config__.on" :key="key" class="reg-item">
+              <span class="close-btn" @click="deleteEvent(key)">
+                <i class="el-icon-close" />
+              </span>
+              <el-form-item label="事件名称">
+                @{{ key }}= {{ value }}()
+              </el-form-item>
+
+            </div>
+            <div style="margin-left: 20px">
+              <el-button icon="el-icon-circle-plus-outline" type="text" @click="showAddEvent = true">
+                添加事件
+              </el-button>
+            </div>
+          </template>
+
         </el-form>
         <!-- 表单属性 -->
         <el-form v-show="currentTab === 'form'" size="small" label-width="90px">
@@ -482,7 +498,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-
+  {{formConf.__method__ }}ss
           <el-form-item label="表单名">
             <el-input v-model="formConf.formRef" placeholder="请输入表单名（ref）" />
           </el-form-item>
@@ -539,6 +555,27 @@
 
     <treeNode-dialog :visible.sync="dialogVisible" title="添加选项" @commit="addNode" />
     <icons-dialog :visible.sync="iconsVisible" :current="activeData[currentIconModel]" @select="setIcon" />
+
+    <el-dialog title="添加事件" :visible.sync="showAddEvent" width="30%" :before-close="handleEventClose">
+      <el-form ref="form" :model="eventForm" label-width="80px">
+        <el-form-item label="事件名称">
+          <el-select v-model="eventForm.eventName" placeholder="请选择事件">
+            <el-option v-for="item in eventOptions" :key="item.label" :label="item.label" :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="函数名称">
+          <el-select v-model="eventForm.method" placeholder="请选择回调函数">
+            <el-option v-for="item in methodOptions" :key="item.label" :label="item.label" :value="item.label">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="showAddEvent = false">取 消</el-button>
+        <el-button type="primary" @click="addEvent">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -581,6 +618,28 @@ export default {
   },
   data() {
     return {
+      clickTestButton1() {
+        console.log(
+          `%c【测试按钮1】点击事件里可以访问当前表单：
+                1) formModel='formData', 所以this.formData可以拿到当前表单的model
+                2) formRef='elForm', 所以this.$refs.elForm可以拿到当前表单的ref(vue组件)
+              `,
+          'color:#409EFF;font-size: 15px'
+        )
+        console.log('表单的Model：', this.formData)
+        console.log('表单的ref：', this.$refs.elForm)
+      },
+      showAddEvent: false,
+      eventForm: { eventName: "", method: "" },
+      // 方法名称
+      methodOptions: [{ label: "clickTest", value: " console.log('表单的Model：', this.formData)" }],
+      // 事件名称
+      eventOptions: [
+        { label: 'onChange', value: 'change' },
+        { label: 'onClick', value: 'click' },
+        { label: 'onBlur', value: 'blur' },
+        { label: 'onInput', value: 'input' }
+      ],
       FactiveData: this.activeData,
       currentTab: 'field',
       currentNode: null,
@@ -588,7 +647,7 @@ export default {
       iconsVisible: false,
       currentIconModel: null,
       javaClassOptions: [],
-      fieldsOptions:[],
+      fieldsOptions: [],
       dateTypeOptions: [
         {
           label: '日(date)',
@@ -735,6 +794,9 @@ export default {
     }
   },
   methods: {
+    handleEventClose() {
+      this.eventForm = { eventName: "", method: "" }
+    },
     entityChange(entity) {
       this.getEntityDetail(entity)
     },
@@ -759,6 +821,13 @@ export default {
         pattern: '',
         message: ''
       })
+    },
+    addEvent() {
+      this.$set(this.activeData.__config__.on, this.eventForm.eventName, this.eventForm.method);
+      this.showAddEvent = false
+    },
+    deleteEvent(key) {
+      this.$delete(this.activeData.__config__.on, key);
     },
     addSelectItem() {
       this.activeData.__slot__.options.push({

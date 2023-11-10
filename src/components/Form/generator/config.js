@@ -10,7 +10,11 @@ export const formConf = {
   gutter: 15,
   disabled: false,
   span: 24,
-  formBtns: true
+  formBtns: true,
+
+  __method__:{
+    "clickTest": function clickTest(){}
+  }
 }
 
 // 输入型组件 【左面板】
@@ -31,7 +35,10 @@ export const inputComponents = [
       span: 24,
       document: 'https://element.eleme.cn/#/zh-CN/component/input',
       // 正则校验规则
-      regList: []
+      regList: [],
+      on: {
+        click: 'clickTest'
+      }
     },
     // 组件的插槽属性
     __slot__: {

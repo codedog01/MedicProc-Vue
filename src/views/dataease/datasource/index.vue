@@ -2,7 +2,7 @@
  * @Author: lengao 841423154@qq.com
  * @Date: 2023-11-02 16:46:48
  * @LastEditors: lengao 841423154@qq.com
- * @LastEditTime: 2023-11-06 09:56:15
+ * @LastEditTime: 2023-11-10 12:42:19
  * @FilePath: \MedicProc-Vue\src\views\dataease\datasource\index.vue
  * @Description: 
 -->
@@ -23,7 +23,7 @@ export default {
   },
   created() {
     toDataEase().then(res => {
-      this.getConfigKey("dataease.system.url").then(response => {
+      this.getConfigKey("dataease.datasource.url").then(response => {
         this.url = response.msg;
       });
     })
