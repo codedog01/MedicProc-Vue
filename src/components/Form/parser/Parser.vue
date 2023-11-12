@@ -48,7 +48,8 @@ const layouts = {
 }
 
 function renderFrom(h) {
-  const formConfCopy = this.formConfCopy
+  const { formConfCopy } = this
+
   return (
     <el-row gutter={formConfCopy.gutter}>
       <el-form
@@ -96,6 +97,7 @@ function renderChildren(h, scheme) {
 }
 
 function setValue(event, config, scheme) {
+  console.log(123123);
   this.$set(config, 'defaultValue', event)
   this.$set(this[this.formConf.formModel], scheme.__vModel__, event)
 }
@@ -104,13 +106,20 @@ function buildListeners(scheme) {
   const config = scheme.__config__
   const methods = this.formConf.__methods__ || {}
   const listeners = {}
-
   // 给__methods__中的方法绑定this和event
   Object.keys(methods).forEach(key => {
-    listeners[key] = event => methods[key].call(this, event)
+    if (typeof methods[key] == 'string') {
+      const str = methods[key]
+      listeners[key] = event => new Function(str).call(this, event)
+      // 调用函数
+    } else {
+      listeners[key] = event => methods[key].call(this, event)
+    }
+
   })
   // 响应 render.js 中的 vModel $emit('input', val)
   listeners.input = event => setValue.call(this, event, config, scheme)
+  // listeners.change = event => setValue.call(this, event, config, scheme)
 
   return listeners
 }
@@ -126,16 +135,14 @@ export default {
     }
   },
   data() {
-    return {
+    const data = {
       formConfCopy: deepClone(this.formConf),
       [this.formConf.formModel]: {},
       [this.formConf.formRules]: {}
     }
-  },
-  created() {
-    this.initFormData(this.formConfCopy.fields, this[this.formConf.formModel])
-    this.buildRules(this.formConfCopy.fields, this[this.formConf.formRules])
-
+    this.initFormData(data.formConfCopy.fields, data[this.formConf.formModel])
+    this.buildRules(data.formConfCopy.fields, data[this.formConf.formRules])
+    return data
   },
   methods: {
     initFormData(componentList, formData) {

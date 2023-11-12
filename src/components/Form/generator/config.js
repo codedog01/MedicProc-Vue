@@ -1,3 +1,4 @@
+
 // 表单属性【右面板】
 export const formConf = {
   entity: null,
@@ -11,10 +12,7 @@ export const formConf = {
   disabled: false,
   span: 24,
   formBtns: true,
-
-  __method__:{
-    "clickTest": function clickTest(){}
-  }
+  __methods__: {}
 }
 
 // 输入型组件 【左面板】
@@ -36,9 +34,6 @@ export const inputComponents = [
       document: 'https://element.eleme.cn/#/zh-CN/component/input',
       // 正则校验规则
       regList: [],
-      on: {
-        click: 'clickTest'
-      }
     },
     // 组件的插槽属性
     __slot__: {
@@ -54,7 +49,10 @@ export const inputComponents = [
     maxlength: null,
     'show-word-limit': false,
     readonly: false,
-    disabled: false
+    disabled: false,
+    on: {
+    },
+    eventOptions: ['change', 'click', 'blur', 'focus', 'clear']
   },
   {
     __config__: {
@@ -82,7 +80,10 @@ export const inputComponents = [
     maxlength: null,
     'show-word-limit': false,
     readonly: false,
-    disabled: false
+    disabled: false,
+    on: {
+    },
+    eventOptions: ['change', 'click', 'blur', 'focus', 'clear']
   },
   {
     __config__: {
@@ -113,7 +114,10 @@ export const inputComponents = [
     maxlength: null,
     'show-word-limit': false,
     readonly: false,
-    disabled: false
+    disabled: false,
+    on: {
+    },
+    eventOptions: ['change', 'click', 'blur', 'focus', 'clear']
   },
   {
     __config__: {
@@ -138,12 +142,13 @@ export const inputComponents = [
     'step-strictly': false,
     precision: undefined,
     'controls-position': '',
-    disabled: false
+    disabled: false,
+    on: {
+    },
   },
   {
     __config__: {
       label: '编辑器',
-      columnName: null,
       showLabel: true,
       changeTag: true,
       labelWidth: null,
@@ -193,7 +198,10 @@ export const selectComponents = [
     clearable: true,
     disabled: false,
     filterable: false,
-    multiple: false
+    multiple: false,
+    on: {
+    },
+    eventOptions: ['visible-change', 'remove-tag', 'change', 'blur', 'focus', 'clear']
   },
   {
     __config__: {
@@ -240,7 +248,10 @@ export const selectComponents = [
     disabled: false,
     clearable: true,
     filterable: false,
-    separator: '/'
+    separator: '/',
+    on: {
+    },
+    eventOptions: ['visible-change', 'remove-tag', 'expand-change', 'change', 'blur', 'focus']
   },
   {
     __config__: {
@@ -271,7 +282,10 @@ export const selectComponents = [
     },
     style: {},
     size: 'medium',
-    disabled: false
+    disabled: false,
+    on: {
+    },
+    eventOptions: ['input',]
   },
   {
     __config__: {
@@ -304,7 +318,11 @@ export const selectComponents = [
     size: 'medium',
     min: null,
     max: null,
-    disabled: false
+    disabled: false,
+    on: {
+    },
+    eventOptions: ['change']
+
   },
   {
     __config__: {
@@ -329,7 +347,10 @@ export const selectComponents = [
     'active-color': null,
     'inactive-color': null,
     'active-value': true,
-    'inactive-value': false
+    'inactive-value': false,
+    on: {
+    },
+    eventOptions: ['change']
   },
   {
     __config__: {
@@ -352,7 +373,11 @@ export const selectComponents = [
     max: 100,
     step: 1,
     'show-stops': false,
-    range: false
+    range: false,
+    on: {
+    },
+    eventOptions: ['change', 'input']
+
   },
   {
     __config__: {
@@ -378,7 +403,10 @@ export const selectComponents = [
       selectableRange: '00:00:00-23:59:59'
     },
     format: 'HH:mm:ss',
-    'value-format': 'HH:mm:ss'
+    'value-format': 'HH:mm:ss',
+    on: {
+    },
+    eventOptions: ['change', 'blur','focus']
   },
   {
     __config__: {
@@ -404,7 +432,10 @@ export const selectComponents = [
     'start-placeholder': '开始时间',
     'end-placeholder': '结束时间',
     format: 'HH:mm:ss',
-    'value-format': 'HH:mm:ss'
+    'value-format': 'HH:mm:ss',
+    on: {
+    },
+    eventOptions: ['change', 'blur', 'focus']
   },
   {
     __config__: {
@@ -429,7 +460,11 @@ export const selectComponents = [
     clearable: true,
     format: 'yyyy-MM-dd',
     'value-format': 'yyyy-MM-dd',
-    readonly: false
+    readonly: false,
+    on: {
+    },
+    eventOptions: ['change', 'blur', 'focus']
+
   },
   {
     __config__: {
@@ -456,7 +491,10 @@ export const selectComponents = [
     clearable: true,
     format: 'yyyy-MM-dd',
     'value-format': 'yyyy-MM-dd',
-    readonly: false
+    readonly: false,
+    on: {
+    },
+    eventOptions: ['change', 'blur', 'focus']
   },
   {
     __config__: {
@@ -479,7 +517,10 @@ export const selectComponents = [
     'allow-half': false,
     'show-text': false,
     'show-score': false,
-    disabled: false
+    disabled: false,
+    on: {
+    },
+    eventOptions: ['change']
   },
   {
     __config__: {
@@ -500,7 +541,10 @@ export const selectComponents = [
     'show-alpha': false,
     'color-format': '',
     disabled: false,
-    size: 'medium'
+    size: 'medium',
+    on: {
+    },
+    eventOptions: ['change','active-change']
   },
   {
     __config__: {
@@ -531,7 +575,9 @@ export const selectComponents = [
     name: 'file',
     'auto-upload': true,
     'list-type': 'text',
-    multiple: false
+    multiple: false,
+    on: {
+    }
   }
 ]
 
@@ -570,7 +616,11 @@ export const layoutComponents = [
     size: 'medium',
     plain: false,
     circle: false,
-    disabled: false
+    disabled: false,
+    on: {
+    },
+    eventOptions: ['click']
+
   },
   {
     __config__: {

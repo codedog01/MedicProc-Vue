@@ -5,9 +5,9 @@
       <el-tab-pane label="表单属性" name="form" />
     </el-tabs>
     <div class="field-box">
-      <!-- <a class="document-link" target="_blank" :href="documentLink" title="查看组件文档">
+      <a class="document-link" target="_blank" :href="documentLink" title="查看组件文档">
         <i class="el-icon-link" />
-      </a> -->
+      </a>
       <el-scrollbar class="right-scrollbar">
         <!-- 组件属性 -->
         <el-form v-show="currentTab === 'field' && showField" size="small" label-width="90px">
@@ -23,7 +23,7 @@
               </el-option-group>
             </el-select>
           </el-form-item>
-          <el-form-item v-if="activeData.__vModel__ !== undefined" label="实体字段">
+          <el-form-item v-if="activeData.__config__.columnName !== undefined" label="实体字段">
             <el-select v-model="activeData.__vModel__" placeholder="请选择Java实体字段（v-model）" @change="vModelChange">
               <el-option v-for="item in fieldsOptions" :key="item.fieldName" :label="item.fieldName"
                 :value="item.fieldName">
@@ -473,7 +473,7 @@
 
           <template>
             <el-divider>事件绑定</el-divider>
-            <div v-for="(value, key) in activeData.__config__.on" :key="key" class="reg-item">
+            <div v-for="(value, key) in activeData.on" :key="key" class="reg-item">
               <span class="close-btn" @click="deleteEvent(key)">
                 <i class="el-icon-close" />
               </span>
@@ -498,7 +498,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-  {{formConf.__method__ }}ss
+
           <el-form-item label="表单名">
             <el-input v-model="formConf.formRef" placeholder="请输入表单名（ref）" />
           </el-form-item>
@@ -556,17 +556,19 @@
     <treeNode-dialog :visible.sync="dialogVisible" title="添加选项" @commit="addNode" />
     <icons-dialog :visible.sync="iconsVisible" :current="activeData[currentIconModel]" @select="setIcon" />
 
-    <el-dialog title="添加事件" :visible.sync="showAddEvent" width="30%" :before-close="handleEventClose">
+    <el-dialog title="添加事件" :visible.sync="showAddEvent" width="30%">
       <el-form ref="form" :model="eventForm" label-width="80px">
         <el-form-item label="事件名称">
           <el-select v-model="eventForm.eventName" placeholder="请选择事件">
-            <el-option v-for="item in eventOptions" :key="item.label" :label="item.label" :value="item.value">
+            <!-- <el-option v-for="item in activeData.eventOptions" :key="item.label" :label="item.label" :value="item.value">
+            </el-option> -->
+            <el-option v-for="item in activeData.eventOptions" :key="item" :label="item" :value="item">
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="函数名称">
           <el-select v-model="eventForm.method" placeholder="请选择回调函数">
-            <el-option v-for="item in methodOptions" :key="item.label" :label="item.label" :value="item.label">
+            <el-option v-for="item in methodOptions" :key="item.funcName" :label="item.funcName" :value="item.funcName">
             </el-option>
           </el-select>
         </el-form-item>
@@ -590,6 +592,7 @@ import {
 // import { saveFormConf } from '@/utils/form/db'
 import * as FormDashboardAPI from "@/api/form/dashboard";
 import * as FormTemplateAPI from "@/api/form/template";
+import * as FormFuncAPI from "@/api/form/func";
 const dateTimeFormat = {
   date: 'yyyy-MM-dd',
   week: 'yyyy 第 WW 周',
@@ -609,37 +612,21 @@ export default {
     TreeNodeDialog,
     IconsDialog
   },
-  props: ['showField', 'activeData', 'formConf'],
+  props: ['showField', 'activeData', 'formConf', 'formId'],
   mounted() {
     this.getEntityList()
     if (this.formConf.entity) {
       this.getEntityDetail(this.formConf.entity)
     }
+    this.getFuncList(this.formId)
+    // this.formConf= formConf
   },
   data() {
     return {
-      clickTestButton1() {
-        console.log(
-          `%c【测试按钮1】点击事件里可以访问当前表单：
-                1) formModel='formData', 所以this.formData可以拿到当前表单的model
-                2) formRef='elForm', 所以this.$refs.elForm可以拿到当前表单的ref(vue组件)
-              `,
-          'color:#409EFF;font-size: 15px'
-        )
-        console.log('表单的Model：', this.formData)
-        console.log('表单的ref：', this.$refs.elForm)
-      },
       showAddEvent: false,
       eventForm: { eventName: "", method: "" },
       // 方法名称
-      methodOptions: [{ label: "clickTest", value: " console.log('表单的Model：', this.formData)" }],
-      // 事件名称
-      eventOptions: [
-        { label: 'onChange', value: 'change' },
-        { label: 'onClick', value: 'click' },
-        { label: 'onBlur', value: 'blur' },
-        { label: 'onInput', value: 'input' }
-      ],
+      methodOptions: [],
       FactiveData: this.activeData,
       currentTab: 'field',
       currentNode: null,
@@ -781,11 +768,11 @@ export default {
     }
   },
   watch: {
-    'formConf': function (val, oldVal) {
-      if (val.entity) {
-        this.getEntityDetail(val.entity)
-      }
-    },
+    // 'formConf': function (val, oldVal) {
+    //   if (val.entity) {
+    //     this.getEntityDetail(val.entity)
+    //   }
+    // },
     'activeData': {
       handler(newValue, oldValue) {
         this.FactiveData = newValue
@@ -794,6 +781,25 @@ export default {
     }
   },
   methods: {
+    getFuncList(formId) {
+      FormFuncAPI.listByForm({ formId }).then(res => {
+        const data = res.data
+        this.methodOptions = data
+        const resMap = new Map()
+        data.forEach(item => {
+          resMap.set(item.funcName, item.funcBody)
+        })
+
+
+        let resultObject = data.reduce((acc, current) => {
+          acc[current.funcName] = current.funcBody;
+          return acc;
+        }, {});
+        this.formConf.__methods__ = resultObject
+        console.log("this.formConf.__methods__", resultObject);
+      })
+    },
+
     handleEventClose() {
       this.eventForm = { eventName: "", method: "" }
     },
@@ -823,11 +829,11 @@ export default {
       })
     },
     addEvent() {
-      this.$set(this.activeData.__config__.on, this.eventForm.eventName, this.eventForm.method);
+      this.$set(this.activeData.on, this.eventForm.eventName, this.eventForm.method);
       this.showAddEvent = false
     },
     deleteEvent(key) {
-      this.$delete(this.activeData.__config__.on, key);
+      this.$delete(this.activeData.on, key);
     },
     addSelectItem() {
       this.activeData.__slot__.options.push({

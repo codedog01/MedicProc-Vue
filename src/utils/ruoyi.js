@@ -167,7 +167,7 @@ export function handleTree(data, id, parentId, children) {
   var childrenListMap = {};
   var nodeIds = {};
   var tree = [];
-
+debugger
   for (let d of data) {
     let parentId = d[config.parentId];
     if (childrenListMap[parentId] == null) {

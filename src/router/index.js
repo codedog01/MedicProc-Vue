@@ -34,6 +34,13 @@ import Layout from '@/layout'
 
 // 公共路由
 export let constantRoutes = [
+    {
+    path: '/test',
+      component: () => import('@/components/Form/parser/test/index'),
+
+    hidden: true,
+ 
+  },
   {
     path: '/redirect',
     component: Layout,

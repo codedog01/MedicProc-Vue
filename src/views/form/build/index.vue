@@ -36,9 +36,9 @@
         <el-button icon="el-icon-video-play" type="text" @click="saveHandle">
           保存
         </el-button>
-        <!-- <el-button icon="el-icon-video-play" type="text" @click="run">
+        <el-button icon="el-icon-video-play" type="text" @click="run">
           运行
-        </el-button> -->
+        </el-button>
         <el-button icon="el-icon-view" type="text" @click="showJson">
           查看json
         </el-button>
@@ -69,7 +69,7 @@
       </el-scrollbar>
     </div>
 
-    <right-panel :active-data="activeData" :form-conf="formConf" :show-field="!!drawingList.length"
+    <right-panel :active-data="activeData" :form-conf="formConf" :formId="formId" :show-field="!!drawingList.length"
       @tag-change="tagChange" @fetch-data="fetchData" />
 
     <form-drawer :visible.sync="drawerVisible" :form-data="formData" size="100%" :generate-conf="generateConf" />
@@ -117,6 +117,7 @@ let tempActiveData
 // const drawingListInDB = getDrawingList()
 // const formConfInDB = getFormConf()
 const idGlobal = getIdGlobal()
+import * as FormFuncAPI from "@/api/form/func";
 
 export default {
   components: {
@@ -128,6 +129,7 @@ export default {
     CodeTypeDialog,
     DraggableItem
   },
+
   data() {
     return {
       logo,
@@ -202,7 +204,6 @@ export default {
     },
     'formId': function (val, oldVal) {
       if (val || oldVal) {
-        console.log(val);
         FormDashboardAPI.listForm({ id: val }).then(res => {
           const formObj = JSON.parse(res.rows[0].json)
           this.refreshJson(formObj)
@@ -210,11 +211,16 @@ export default {
       }
     },
   },
+
   mounted() {
     FormDashboardAPI.listForm({ id: this.formId }).then(res => {
       const formObj = JSON.parse(res.rows[0].json)
       this.refreshJson(formObj)
     })
+
+    this.getFuncList()
+
+
     loadBeautifier(btf => {
       beautifier = btf
     })
@@ -241,9 +247,31 @@ export default {
     }
   },
   methods: {
+    getFuncList() {
+      const formId = this.formId
+      FormFuncAPI.listByForm({ formId }).then(res => {
+        const data = res.data
+        
+        let resultObject = data.reduce((acc, current) => {
+          acc[current.funcName] = current.funcBody;
+          return acc;
+        }, {});
+        this.formConf.__methods__ = resultObject
+        console.log("this.formConf.__methods__", resultObject);
+      })
+    },
     saveHandle() {
       this.AssembleFormData()
-      const data = { id: this.formId, json: JSON.stringify(this.formData) }
+      const data = {
+        id: this.formId, json: JSON.stringify(this.formData, (key, value) => {
+          if (typeof value === 'function') {
+            return value.toString();
+          }
+          return value;
+        })
+      }
+
+
       FormDashboardAPI.updateForm(data).then(res => {
         this.$message.success(res.msg)
       })
@@ -397,6 +425,7 @@ export default {
     showJson() {
       this.AssembleFormData()
       this.jsonDrawerVisible = true
+
     },
     download() {
       this.dialogVisible = true
